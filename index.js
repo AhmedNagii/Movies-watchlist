@@ -1,5 +1,5 @@
 const apiKey = "a02b3192";
-const  moviesContainer =   document.getElementById('movies-container')
+const  moviesContainer =   document.getElementById('any')
 let moviesTitles = [];
 
 document.getElementById("search").addEventListener("click", () => {
@@ -8,9 +8,9 @@ document.getElementById("search").addEventListener("click", () => {
     .then((res) => res.json())
     .then((data) => {
       for (let i = 0; i < data.Search.length; i++) {
-        moviesTitles.push(data.Search[i].Title);
+        moviesTitles.push(data.Search[i].imdbID);
       }
-console.log(moviesTitles)
+
      getEachMovieInfo();
     });
 });
@@ -21,13 +21,15 @@ function getEachMovieInfo() {
   let listItems ="";
 
   for (let i = 0; i < 10; i++) {
+    
     fetch(
-      `http://www.omdbapi.com/?t=${moviesTitles[i]}&type=movie&apikey=${apiKey}`
+       `http://www.omdbapi.com/?i=${moviesTitles[i]}&apikey=${apiKey}`
+     
     )
       .then((res) => res.json())
       .then((data) => {
-      
-        listItems  =+`
+      console.log(data.Title)
+        listItems  = listItems +`
         <div class="movie">
           <img src="${data.Poster}" class="movie-poster">
             <div>
@@ -45,13 +47,12 @@ function getEachMovieInfo() {
             </div>
         </div>`;
 
-
-         
+          console.log(listItems );
 
       }); 
   }
-  console.log(listItems );
-  moviesContainer.innerHTML = listItems
+ 
+  moviesContainer.textContent = listItems
 // console.log(=listItems );
   
 }
