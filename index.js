@@ -14,6 +14,7 @@ document.getElementById("search").addEventListener("click", () => {
     for(let movie of movies.Search) {
       moviesTitles.push(movie.imdbID)
     }
+   
     renderMovies()
   })
 });
